@@ -27,6 +27,10 @@
 ### URL格式
 ### 数据格式
 ### 网页编码
+import abc
+
+import time
+
 import html_parser
 import html_downloader
 import html_outputer
@@ -59,17 +63,23 @@ class SpiderMain(object):
                 print 'craw failed'
 
         self.outputer.output_html()
-
+    @abc.abstractmethod   # 抽象方法？
     def crawGithub(self, url):
         content = self.downloader.download(url)
         self.parser.parseGithub(url,content)
 
 
 if __name__ == "__main__":
-    root_url = "http://baike.baidu.com/view/21087.htm"
-    obj_spider = SpiderMain()
-    obj_spider.craw(root_url)
+    # root_url = "http://baike.baidu.com/view/21087.htm"
+    # obj_spider = SpiderMain()
+    # obj_spider.craw(root_url)i
+    for i in range(1,100):
+        url = 'https://github.com/search?o=desc&p='+str(i) +'&q=android&s=stars&type=Repositories&utf8=%E2%9C%93'
+        print '================'+str(i)+'====================='
+        obj_spider = SpiderMain()
+        obj_spider.crawGithub(url)
+        # todo urllib2.HTTPError: HTTP Error 429: Too Many Requests的问题
+        if i%5==0:
+            time.sleep(10)
+            print '=======sleep==========='
 
-url = "https://github.com/search?o=desc&p=3&q=android&s=stars&type=Repositories&utf8=%E2%9C%93";
-obj_spider = SpiderMain()
-obj_spider.crawGithub(url)

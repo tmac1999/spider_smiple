@@ -42,10 +42,15 @@ class HtmlParser(object):
 
     def parseGithub(self, url, html_cont):
         soup = BeautifulSoup(html_cont, 'html.parser', from_encoding='utf-8')
-        result_set = soup.find_all('a',class_="v-align-middle")
-        result_set2 = soup.find_all('a',class_="muted-link")
-        for result_url in result_set:
-            print result_url
+        result_set = soup.find_all('a', class_="v-align-middle")
+        result_set2 = soup.find_all('a', class_="muted-link")
+        # for result_url in result_set:
+        #     print result_url
         for result_url in result_set2:
-            print result_url
+            if len(result_url.get_text())>15:
+                starNum = result_url.get_text()
+                split = result_url.get("href").split("/")
+                splitUrl = split[1] + "_" + split[2]
+                print splitUrl + starNum
+
         return result_set
