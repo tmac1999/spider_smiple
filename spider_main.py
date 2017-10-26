@@ -27,6 +27,13 @@
 ### URL格式
 ### 数据格式
 ### 网页编码
+
+# 一些爬坑记录：
+# 1.urllib2.HTTPError: HTTP Error 429: Too Many Requests的问题 429代表too many request ，同时包含一个 Retry-After 响应头用于告诉客户端多长时间后可以再次请求服务。
+#   尝试1 模拟浏览器的请求头 User-Agent:发现被Forbidden了 Http403
+#   尝试2 time.sleep(10)停10秒,问题依旧
+#   尝试3 递归循环 暂停 5秒，知道可以retry-request为止，problem-resolved
+
 import abc
 
 import time
@@ -63,23 +70,26 @@ class SpiderMain(object):
                 print 'craw failed'
 
         self.outputer.output_html()
-    @abc.abstractmethod   # 抽象方法？
+
+    @abc.abstractmethod  # 抽象方法？
     def crawGithub(self, url):
         content = self.downloader.download(url)
-        self.parser.parseGithub(url,content)
+        if content != None:
+            self.parser.parseGithub(url, content)
+        else:
+            print content
 
 
 if __name__ == "__main__":
     # root_url = "http://baike.baidu.com/view/21087.htm"
     # obj_spider = SpiderMain()
     # obj_spider.craw(root_url)i
-    for i in range(1,100):
-        url = 'https://github.com/search?o=desc&p='+str(i) +'&q=android&s=stars&type=Repositories&utf8=%E2%9C%93'
-        print '================'+str(i)+'====================='
+    for i in range(9, 100):
+        url = 'https://github.com/search?o=desc&p=' + str(i) + '&q=android&s=stars&type=Repositories&utf8=%E2%9C%93'
+        print '================' + str(i) + '====================='
         obj_spider = SpiderMain()
         obj_spider.crawGithub(url)
         # todo urllib2.HTTPError: HTTP Error 429: Too Many Requests的问题
-        if i%5==0:
-            time.sleep(10)
-            print '=======sleep==========='
-
+        # if i % 5 == 0:
+        #     time.sleep(10)
+        #     print '==========sleep==========='
