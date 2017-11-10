@@ -16,6 +16,7 @@ if __name__ == '__main__':
     # cursor.fetchall()
 
     #
+    tableList = []
     for row in cursor:
         # print row[0]
         cursorTemp = connect.cursor()
@@ -23,7 +24,7 @@ if __name__ == '__main__':
         # cursorRowCount.execute("select count(*) from " + row[0])
         cursorTemp.execute("PRAGMA table_info([" + row[0] + "])")
         fetchall = cursorTemp.fetchall()
-        tableList = []
+
         if fetchall[-1].__contains__('Des'):
             cursorMyMsgRowCount = connect.cursor()
             cursorOtherMsgRowCount = connect.cursor()
@@ -36,11 +37,13 @@ if __name__ == '__main__':
             tableList.append(table)
 
             # print row[0], ":", msg_row_count_next_, '-', next_, '-', msg_row_count_next_ / float(
+
             #     next_)  # 分母应该还要减去Type=10000 的msg，因为这类msg都Des=1
-        sorted(tableList)
-        # todo sort not complete
-        for object in tableList:
-            print object.dic()
+
+    l = sorted(tableList)
+    # todo sort not complete
+    for object in l:
+        print object.dic()
 
 
 

@@ -11,9 +11,9 @@ class ChatTable(object):
 
     def __cmp__(self, other):
         if self.myMsgCount < other.myMsgCount:
-            return -1
-        elif self.myMsgCount > other.myMsgCount:
             return 1
+        elif self.myMsgCount > other.myMsgCount:
+            return -1
         else:
             return 0
 
