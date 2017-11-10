@@ -3,10 +3,13 @@
 import sqlite3
 
 from ChatTable import ChatTable
+from FriendAnalysis import FriendAnalysis
 
 
 def prn_obj(obj):
     print '\n'.join(['%s:%s' % item for item in obj.__dict__.items()])
+
+
 if __name__ == '__main__':
     connect = sqlite3.connect('/Users/lianhua/Downloads/MM.sqlite')
     cursor = connect.cursor()
@@ -17,6 +20,9 @@ if __name__ == '__main__':
 
     #
     tableList = []
+    friend_analysis = FriendAnalysis()
+    dbLocation = '/Users/lianhua/Downloads/WCDB_Contact.sqlite'
+    nameDict = friend_analysis.openDB(dbLocation)
     for row in cursor:
         # print row[0]
         cursorTemp = connect.cursor()
@@ -33,7 +39,12 @@ if __name__ == '__main__':
             msg_row_count_next_ = cursorMyMsgRowCount.next()[0]
             next_ = cursorOtherMsgRowCount.next()[0]
             # cursorRowCount.next() 返回第一行数据，tuple类型，第0号位置即Des=0的行数（自己说话的行数）
-            table = ChatTable(row[0], msg_row_count_next_, next_, msg_row_count_next_ / float(next_))
+
+            # 分隔后第一位即Username
+            row__split = row[0].split('_')
+
+            userName = nameDict.get(row__split[1])
+            table = ChatTable(row[0], userName, msg_row_count_next_, next_, msg_row_count_next_ / float(next_))
             tableList.append(table)
 
             # print row[0], ":", msg_row_count_next_, '-', next_, '-', msg_row_count_next_ / float(
@@ -41,14 +52,5 @@ if __name__ == '__main__':
             #     next_)  # 分母应该还要减去Type=10000 的msg，因为这类msg都Des=1
 
     l = sorted(tableList)
-    # todo sort not complete
     for object in l:
         print object.dic()
-
-
-
-
-
-
-
-
