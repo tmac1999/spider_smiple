@@ -2,9 +2,10 @@ class ChatTable(object):
     def __str__(self):
         return self.tableName, self.userName, self.myMsgCount
 
-    def __init__(self, tableName, userName, myMsgCount, totalMsgCount, percentage):
+    def __init__(self, tableName, userName, contactRemark, myMsgCount, totalMsgCount, percentage):
         self.tableName = tableName
         self.userName = userName
+        self.contactRemark = contactRemark
         self.myMsgCount = myMsgCount
         self.otherMsgCount = totalMsgCount
         self.percentage = percentage
@@ -21,4 +22,4 @@ class ChatTable(object):
         return self.tableName
 
     def dic(self):
-        return self.tableName + ':', self.userName, ':', self.myMsgCount, '-', self.otherMsgCount, '-', self.percentage
+        return self.tableName + ':', self.userName, ':', self.contactRemark, ':', self.myMsgCount, '-', self.otherMsgCount, '-', self.percentage

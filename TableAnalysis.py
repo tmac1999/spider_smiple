@@ -4,6 +4,7 @@ import sqlite3
 
 from ChatTable import ChatTable
 from FriendAnalysis import FriendAnalysis
+from Friend import Friend
 
 
 def prn_obj(obj):
@@ -43,14 +44,18 @@ if __name__ == '__main__':
             # 分隔后第一位即Username
             row__split = row[0].split('_')
 
-            userName = nameDict.get(row__split[1])
-            table = ChatTable(row[0], userName, msg_row_count_next_, next_, msg_row_count_next_ / float(next_))
-            tableList.append(table)
+            friend = nameDict.get(row__split[1])
+            # print friend.userName
+            if friend != None:
+                table = ChatTable(row[0], friend.userName, friend.contactRemark, msg_row_count_next_, next_,
+                                  msg_row_count_next_ / float(next_))
+                tableList.append(table)
 
-            # print row[0], ":", msg_row_count_next_, '-', next_, '-', msg_row_count_next_ / float(
+                # print row[0],':',friend.contactRemark, ":", msg_row_count_next_, '-', next_, '-', msg_row_count_next_ / float(
+                #
+                # next_)  # 分母应该还要减去Type=10000 的msg，因为这类msg都Des=1
 
-            #     next_)  # 分母应该还要减去Type=10000 的msg，因为这类msg都Des=1
 
     l = sorted(tableList)
     for object in l:
-        print object.dic()
+        print object.myMsgCount,':',object.otherMsgCount,':',object.percentage,':',str(object.contactRemark).split()[0]
