@@ -1,3 +1,8 @@
+#!/usr/bin/python
+# -*- coding:utf8 -*- 为了支持中文注释
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')#此方法是将Python2的默认编码ASCII改为 utf-8。但此方法不是一劳永逸的，可能会使一些代码的行为变得怪异。
 class ChatTable(object):
     def __str__(self):
         return self.tableName, self.userName, self.myMsgCount
@@ -23,3 +28,6 @@ class ChatTable(object):
 
     def dic(self):
         return self.tableName + ':', self.userName, ':', self.contactRemark, ':', self.myMsgCount, '-', self.otherMsgCount, '-', self.percentage
+
+    def dict(self):
+        return self.myMsgCount, ':', self.otherMsgCount, ':', self.percentage, ':',# str(self.contactRemark).split()[0].encode('raw_unicode_escape')

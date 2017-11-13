@@ -57,5 +57,6 @@ if __name__ == '__main__':
 
 
     l = sorted(tableList)
+    # 当输出list时，里面的元素按%r(调__repr__())处理，当输出str时，按%s(调__str__())处理。所以https://segmentfault.com/q/1010000004706142
     for object in l:
-        print object.myMsgCount,':',object.otherMsgCount,':',object.percentage,':',str(object.contactRemark).split()[0]
+        print object.dict(),str(object.contactRemark).split()[0]
