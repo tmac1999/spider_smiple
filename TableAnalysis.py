@@ -1,10 +1,12 @@
 #!/usr/bin/python
 # -*- coding:utf8 -*- 为了支持中文注释
 import sqlite3
-
+import numpy as np
 from ChatTable import ChatTable
 from FriendAnalysis import FriendAnalysis
 from Friend import Friend
+
+from matplotlib_test import ShowChart
 
 
 def prn_obj(obj):
@@ -55,8 +57,19 @@ if __name__ == '__main__':
                 #
                 # next_)  # 分母应该还要减去Type=10000 的msg，因为这类msg都Des=1
 
-
     l = sorted(tableList)
     # 当输出list时，里面的元素按%r(调__repr__())处理，当输出str时，按%s(调__str__())处理。所以https://segmentfault.com/q/1010000004706142
+    people = []
+    perf = []
     for object in l:
-        print object.dict(),str(object.contactRemark).split()[0]
+        print object.dict(), str(object.contactRemark).split()[0]
+        people.append(str(object.contactRemark).split()[0])
+        perf.append(object.myMsgCount)
+    # people = ('Tom', 'Dick', 'Harry', 'Slim', 'Jim')
+    y_pos = np.arange(len(people))
+    performance = np.array(perf)
+    # performance = 3 + 10 * np.random.rand(len(people))
+    error = np.random.rand(len(people))
+
+    chart = ShowChart()
+    chart.showBarChart(y_pos, performance, error, people)
