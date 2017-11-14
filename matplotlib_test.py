@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding:utf8 -*- 为了支持中文注释
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -12,7 +14,7 @@ class ShowChart:
         ax.set_yticklabels(people)
         ax.invert_yaxis()  # labels read top-to-bottom
         ax.set_xlabel('Send Message Count')
-        ax.set_title('Who you talked most ?')
+        ax.set_title('Who do you talk to most ?')
 
         plt.show()
 if __name__ == '__main__':

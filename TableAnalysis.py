@@ -63,6 +63,8 @@ if __name__ == '__main__':
     perf = []
     for object in l:
         print object.dict(), str(object.contactRemark).split()[0]
+        if len(people)>16:
+            continue
         people.append(str(object.contactRemark).split()[0])
         perf.append(object.myMsgCount)
     # people = ('Tom', 'Dick', 'Harry', 'Slim', 'Jim')
